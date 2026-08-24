@@ -1,0 +1,21 @@
+diff --git a/include/platform.h b/include/platform.h
+index c449075b9..69655685c 100644
+--- a/include/platform.h
++++ b/include/platform.h
+@@ -437,6 +437,16 @@ typedef unsigned smalluint;
+ #define HAVE_DEV_FD 1
+ #define DEV_FD_PREFIX "/dev/fd/"
+ 
++/* Tenok does not understand "%m" in a format string, has no /dev/fd, no
++ * wait3() and no clearenv().
++ */
++#if defined(__TENOK__)
++# undef HAVE_PRINTF_PERCENTM
++# undef HAVE_DEV_FD
++# undef HAVE_WAIT3
++# undef HAVE_CLEARENV
++#endif
++
+ #if defined(__UCLIBC__)
+ # if UCLIBC_VERSION < KERNEL_VERSION(0, 9, 32)
+ #  undef HAVE_STRVERSCMP

@@ -1,0 +1,61 @@
+diff --git a/include/busybox.h b/include/busybox.h
+index 6a003d544..d9f05cd13 100644
+--- a/include/busybox.h
++++ b/include/busybox.h
+@@ -19,7 +19,16 @@ extern const uint8_t applet_flags[] ALIGN1;
+ extern const uint8_t applet_suid[] ALIGN1;
+ extern const uint8_t applet_install_loc[] ALIGN1;
+ 
+-#if ENABLE_FEATURE_PREFER_APPLETS \
++#if defined(__TENOK__)
++/* Tenok has neither fork() nor exec(), so an applet can only be reached in
++ * process. What NOFORK asks of an applet is answered by the run instead:
++ * applet_run() lays out the globals again, takes back what was allocated and
++ * closes what was left open, which is the work a process exit does elsewhere.
++ * See user/busybox/applet.c of the Tenok tree.
++ */
++# define APPLET_IS_NOFORK(i) 1
++# define APPLET_IS_NOEXEC(i) 0
++#elif ENABLE_FEATURE_PREFER_APPLETS \
+  || ENABLE_FEATURE_SH_STANDALONE \
+  || ENABLE_FEATURE_SH_NOFORK
+ # define APPLET_IS_NOFORK(i) (applet_flags[(i)/4] & (1 << (2 * ((i)%4))))
+diff --git a/libbb/vfork_daemon_rexec.c b/libbb/vfork_daemon_rexec.c
+index 2055c4b71..81591ecf6 100644
+--- a/libbb/vfork_daemon_rexec.c
++++ b/libbb/vfork_daemon_rexec.c
+@@ -99,6 +99,10 @@ static void restore_nofork_data(struct nofork_save_area *save)
+ 	xfunc_error_retval = save->xfunc_error_retval;
+ }
+ 
++/* Tenok, see above */
++void applet_enter(void);
++void applet_leave(void);
++
+ int FAST_FUNC run_nofork_applet(int applet_no, char **argv)
+ {
+ 	int rc, argc;
+@@ -116,6 +120,13 @@ int FAST_FUNC run_nofork_applet(int applet_no, char **argv)
+ 
+ 	argc = string_array_len(argv);
+ 
++	/* Tenok: what the applet allocates and what it leaves open both go
++	 * with it. A file left open cannot be removed afterwards, there is no
++	 * reference count to defer the release with. See applet_enter() in
++	 * user/busybox/applet.c of the Tenok tree.
++	 */
++	applet_enter();
++
+ 	/* If xfunc "dies" in NOFORK applet, die_func longjmp's here instead */
+ 	die_func = jump;
+ 	rc = setjmp(die_jmp);
+@@ -138,6 +149,9 @@ int FAST_FUNC run_nofork_applet(int applet_no, char **argv)
+ 		/* xfunc died in NOFORK applet */
+ 	}
+ 
++	/* Tenok: take back what the applet did not give up */
++	applet_leave();
++
+ 	/* Restoring some globals */
+ 	restore_nofork_data(&old);
+ 	/* Other globals can be simply reset to defaults */
