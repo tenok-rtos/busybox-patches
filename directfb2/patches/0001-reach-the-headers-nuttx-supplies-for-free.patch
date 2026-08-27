@@ -1,0 +1,40 @@
+diff --git a/lib/direct/os/nuttx/types.h b/lib/direct/os/nuttx/types.h
+index 854fd21..25a73db 100644
+--- a/lib/direct/os/nuttx/types.h
++++ b/lib/direct/os/nuttx/types.h
+@@ -22,21 +22,31 @@
+ #include <alloca.h>
+ #include <fcntl.h>
+ #include <grp.h>
++#include <sched.h>
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++#include <strings.h>
+ #include <sys/ioctl.h>
+ #include <sys/mman.h>
+ #include <sys/prctl.h>
+ #include <sys/stat.h>
+ #include <sys/statfs.h>
+ #include <sys/time.h>
++#include <stdint.h>
++#include <unistd.h>
+ 
+ typedef unsigned int unichar;
+ 
+-typedef unsigned char          u8;
+-typedef unsigned short         u16;
+-typedef unsigned int           u32;
+-typedef unsigned long long int u64;
++/* The unsigned ones are given the names <stdint.h> gives them, so that a
++ * library naming them the same way agrees with this one about what they are.
++ * The signed ones keep the built-in names, which is what the rest of DirectFB2
++ * passes around.
++ */
++typedef uint8_t  u8;
++typedef uint16_t u16;
++typedef uint32_t u32;
++typedef uint64_t u64;
+ 
+ typedef signed char            s8;
+ typedef short int              s16;

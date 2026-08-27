@@ -1,0 +1,52 @@
+diff --git a/lib/direct/messages.h b/lib/direct/messages.h
+index ac78375..2913237 100644
+--- a/lib/direct/messages.h
++++ b/lib/direct/messages.h
+@@ -19,6 +19,8 @@
+ #ifndef __DIRECT__MESSAGES_H__
+ #define __DIRECT__MESSAGES_H__
+ 
++#include <errno.h>
++
+ #include <direct/conf.h>
+ 
+ /**********************************************************************************************************************/
+diff --git a/lib/direct/os/nuttx/filesystem.h b/lib/direct/os/nuttx/filesystem.h
+index c692897..1581638 100644
+--- a/lib/direct/os/nuttx/filesystem.h
++++ b/lib/direct/os/nuttx/filesystem.h
+@@ -19,6 +19,8 @@
+ #ifndef __DIRECT__OS__NUTTX__FILESYSTEM_H__
+ #define __DIRECT__OS__NUTTX__FILESYSTEM_H__
+ 
++#include <dirent.h>
++
+ #include <direct/os/types.h>
+ 
+ /**********************************************************************************************************************/
+diff --git a/lib/direct/os/nuttx/waitqueue.h b/lib/direct/os/nuttx/waitqueue.h
+index e14cd3f..cbed6cf 100644
+--- a/lib/direct/os/nuttx/waitqueue.h
++++ b/lib/direct/os/nuttx/waitqueue.h
+@@ -19,6 +19,8 @@
+ #ifndef __DIRECT__OS__NUTTX__WAITQUEUE_H__
+ #define __DIRECT__OS__NUTTX__WAITQUEUE_H__
+ 
++#include <errno.h>
++
+ #include <direct/os/mutex.h>
+ #include <direct/util.h>
+ 
+diff --git a/lib/fusion/vector.h b/lib/fusion/vector.h
+index 8461659..88ae6e9 100644
+--- a/lib/fusion/vector.h
++++ b/lib/fusion/vector.h
+@@ -19,6 +19,8 @@
+ #ifndef __FUSION__VECTOR_H__
+ #define __FUSION__VECTOR_H__
+ 
++#include <limits.h>
++
+ #include <direct/debug.h>
+ #include <fusion/types.h>
+ 

@@ -1,0 +1,68 @@
+diff --git a/lib/direct/direct.c b/lib/direct/direct.c
+index 82cc6a6..d65b4b8 100644
+--- a/lib/direct/direct.c
++++ b/lib/direct/direct.c
+@@ -16,6 +16,8 @@
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ */
+ 
++#include <stdlib.h>
++
+ #include <direct/direct.h>
+ #include <direct/interface.h>
+ #include <direct/list.h>
+diff --git a/lib/direct/log.c b/lib/direct/log.c
+index 9b7b5f3..84f3800 100644
+--- a/lib/direct/log.c
++++ b/lib/direct/log.c
+@@ -16,6 +16,8 @@
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ */
+ 
++#include <stdlib.h>
++
+ #include <direct/debug.h>
+ #include <direct/log.h>
+ #include <direct/mem.h>
+diff --git a/lib/direct/os/nuttx/system.c b/lib/direct/os/nuttx/system.c
+index 956f913..bd3c345 100644
+--- a/lib/direct/os/nuttx/system.c
++++ b/lib/direct/os/nuttx/system.c
+@@ -16,6 +16,11 @@
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ */
+ 
++#include <stdlib.h>
++
++#include <errno.h>
++#include <unistd.h>
++
+ #include <direct/os/system.h>
+ #include <direct/util.h>
+ 
+diff --git a/lib/direct/util.c b/lib/direct/util.c
+index 5c545b1..f335b88 100644
+--- a/lib/direct/util.c
++++ b/lib/direct/util.c
+@@ -17,6 +17,8 @@
+ */
+ 
+ #include <config.h>
++
++#include <errno.h>
+ #include <direct/debug.h>
+ #include <direct/mem.h>
+ #include <direct/util.h>
+diff --git a/systems/nuttxfb/nuttxfb_system.c b/systems/nuttxfb/nuttxfb_system.c
+index 9b1c2da..52539f0 100644
+--- a/systems/nuttxfb/nuttxfb_system.c
++++ b/systems/nuttxfb/nuttxfb_system.c
+@@ -16,6 +16,8 @@
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ */
+ 
++#include <stdlib.h>
++
+ #include <core/core.h>
+ #include <core/core_system.h>
+ #include <core/layers.h>
